@@ -1,4 +1,5 @@
 //Abraham Mendoza
+#include <Arduino_FreeRTOS.h>
 #include <Stepper.h>
 //inputs
 int buttonIn1 = 2;//button on pin 2
@@ -20,6 +21,12 @@ const int stepsPerRevolution = 2038;
 //init the pins for my motor
 Stepper myStepper = Stepper(stepsPerRevolution, 8, 10, 9, 11);
 bool buttonOn = false;
+
+
+
+
+unsigned long lastMilli = millis();
+unsigned long debounceTime = 50;
 void setup() {
   Serial.begin(9600);
     pinMode(buttonIn1,INPUT_PULLUP);
@@ -37,6 +44,7 @@ void loop() {
 }
 
 bool buttonStateHandelling(int pin){
+//if(millis() -lastMilli >= debounceTime){
   switch(pin){
     case 1:
       if(digitalRead(buttonIn1)==0&& lastButtonState1 == 1){
@@ -59,7 +67,7 @@ bool buttonStateHandelling(int pin){
         } 
       break;     
   }
-  
+//}return false;
 }
 
 void ISR_button1(){
