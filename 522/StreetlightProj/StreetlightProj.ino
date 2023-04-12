@@ -10,6 +10,9 @@ void taskSwitch( void *pvParameters);//timer for the lights to switch
 bool left=true;
 bool sLeds;
 
+int sTimer = 5000;
+int yellowTimer =1000;
+
 void setup(){
   Serial.begin(9600);
   
@@ -27,7 +30,7 @@ void loop(){
 void taskSwitch(void *pvParameters){
   
   while(1){
-  vTaskDelay(5000/portTICK_PERIOD_MS);
+  vTaskDelay(sTimer/portTICK_PERIOD_MS);
   Serial.println("sLeds changed");
   sLeds = true;
   }
@@ -36,6 +39,8 @@ void taskSwitch(void *pvParameters){
 
 
 void taskChangeLed(void *pvParameters){
+  //               "LEFT"|"RIGHT"
+  //-------------------------
   //   Red lights pin 7 and 6
   //Yellow lights pin 5 and 4
   // Green lights pin 3 and 2
@@ -54,7 +59,7 @@ void taskChangeLed(void *pvParameters){
       
       digitalWrite(3,LOW);
       digitalWrite(5,HIGH);
-      vTaskDelay(500/portTICK_PERIOD_MS);
+      vTaskDelay(yellowTimer/portTICK_PERIOD_MS);
       digitalWrite(5,LOW);
       digitalWrite(7,HIGH);
       sLeds =false;
@@ -63,7 +68,7 @@ void taskChangeLed(void *pvParameters){
       
       digitalWrite(2,LOW);
       digitalWrite(4,HIGH);
-      vTaskDelay(500/portTICK_PERIOD_MS);
+      vTaskDelay(yellowTimer/portTICK_PERIOD_MS);
       digitalWrite(4,LOW);
       digitalWrite(6,HIGH);
       sLeds =false;
