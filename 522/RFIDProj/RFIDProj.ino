@@ -82,9 +82,7 @@ void ISR_Register(){
     myLCD.clear();
     myLCD.print("Register card");
     
-    while(!setID()){
-      
-    }
+    while(!setID()){}
     
     myLCD.clear();
     
